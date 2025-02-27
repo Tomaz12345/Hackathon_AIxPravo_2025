@@ -18,7 +18,6 @@ class Migration(migrations.Migration):
                 ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
                 ('brandName', models.CharField(max_length=255)),
                 ('territories', models.CharField(max_length=255)),
-                ('office', models.CharField(max_length=255)),
                 ('goodsServices', models.TextField()),
                 ('logo', models.ImageField(upload_to='logos/')),
                 ('status', models.CharField(choices=[('pending', 'Pending'), ('approved', 'Approved'), ('caution', 'Caution'), ('rejected', 'Rejected')], default='pending', max_length=20)),

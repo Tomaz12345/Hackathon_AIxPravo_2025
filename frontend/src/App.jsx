@@ -2,22 +2,19 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
-import DemoPage from './pages/DemoPage';
 import CheckerPage from './pages/CheckerPage';
 import ResultPage from './pages/ResultPage';
 
 function App() {
-  console.log('App.jsx0');
   return (
     <Router>
       <div className="flex flex-col min-h-screen">
         <Navbar />
         <main className="flex-grow">
           <Routes>
-            {/* <Route path="/" element={<HomePage />} /> */}
-            <Route path='/' element={<DemoPage />} />
-            {/* <Route path="/checker" element={<CheckerPage />} /> */}
-            {/*  <Route path="/result/:id" element={<ResultPage />} /> */}
+            <Route path='/' element={<HomePage />} />
+            <Route path="/checker" element={<CheckerPage />} />
+            <Route path="/result/:id" element={<ResultPage />} />
           </Routes>
         </main>
         <Footer />

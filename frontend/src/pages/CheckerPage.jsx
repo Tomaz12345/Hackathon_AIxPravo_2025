@@ -7,7 +7,6 @@ const CheckerPage = () => {
   const [formData, setFormData] = useState({
     brandName: '',
     territories: '',
-    office: '',
     goodsServices: '',
   });
   const [logo, setLogo] = useState(null);
@@ -129,22 +128,6 @@ const CheckerPage = () => {
         </div>
 
         <div className="mb-6">
-          <label className="block text-gray-700 font-bold mb-2" htmlFor="office">
-            Office
-          </label>
-          <input
-            type="text"
-            id="office"
-            name="office"
-            value={formData.office}
-            onChange={handleInputChange}
-            placeholder="e.g. EUIPO, USPTO"
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            required
-          />
-        </div>
-
-        <div className="mb-6">
           <label className="block text-gray-700 font-bold mb-2" htmlFor="goodsServices">
             Goods and Services
           </label>
@@ -163,7 +146,7 @@ const CheckerPage = () => {
         <div className="flex items-center justify-center">
           <button
             type="submit"
-            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg focus:outline-none focus:shadow-outline w-full md:w-auto"
+            className="bg-blue-100 hover:bg-blue-800 text-blue-700 py-2 px-4"
             disabled={isLoading}
           >
             {isLoading ? 'Processing...' : 'Check Brand Availability'}

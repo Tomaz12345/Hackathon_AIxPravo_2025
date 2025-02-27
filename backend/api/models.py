@@ -12,7 +12,6 @@ class BrandCheck(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     brandName = models.CharField(max_length=255)
     territories = models.CharField(max_length=255)
-    office = models.CharField(max_length=255)
     goodsServices = models.TextField()
     logo = models.ImageField(upload_to='logos/')
     

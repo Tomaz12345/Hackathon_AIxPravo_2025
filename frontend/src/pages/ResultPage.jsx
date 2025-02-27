@@ -81,10 +81,6 @@ const ResultPage = () => {
                   <p className="text-gray-600 font-semibold">Territories:</p>
                   <p className="mb-2">{result.territories}</p>
                 </div>
-                <div>
-                  <p className="text-gray-600 font-semibold">Office:</p>
-                  <p className="mb-2">{result.office}</p>
-                </div>
                 <div className="md:col-span-2">
                   <p className="text-gray-600 font-semibold">Goods and Services:</p>
                   <p className="mb-2">{result.goodsServices}</p>

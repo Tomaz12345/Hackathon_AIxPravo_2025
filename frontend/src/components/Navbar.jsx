@@ -3,7 +3,7 @@ import { FaCheck } from 'react-icons/fa';
 
 const Navbar = () => {
   return (
-    <nav className="bg-gradient-to-r from-blue-600 to-blue-800 p-4 shadow-md">
+    <nav className="bg-gradient-to-r from-blue-600 to-blue-800 p-4 shadow-md w-screen">
       <div className="container mx-auto flex justify-between items-center">
         <Link to="/" className="text-white font-bold text-2xl flex items-center">
           <FaCheck className="mr-2" />
