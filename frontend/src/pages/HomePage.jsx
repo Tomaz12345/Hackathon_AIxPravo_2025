@@ -13,7 +13,7 @@ const HomePage = () => {
         </p>
         <Link 
           to="/checker" 
-          className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-4 rounded-lg text-xl transition-colors duration-300"
+          className="bg-blue-600 hover:bg-blue-700 !text-white font-bold px-8 py-4 rounded-lg text-xl transition-colors duration-300"
         >
           Start Your Brand Check
         </Link>

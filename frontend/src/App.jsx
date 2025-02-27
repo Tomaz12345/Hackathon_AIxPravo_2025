@@ -9,15 +9,15 @@ function App() {
   return (
     <Router>
       <div className="flex flex-col min-h-screen">
-        <Navbar />
-        <main className="flex-grow">
+        <Navbar className="fixed top-0 left-0 w-full z-50"/>
+        <main className="flex-grow overflow-auto pt-16 pb-16">
           <Routes>
             <Route path='/' element={<HomePage />} />
             <Route path="/checker" element={<CheckerPage />} />
             <Route path="/result/:id" element={<ResultPage />} />
           </Routes>
         </main>
-        <Footer />
+        <Footer className="fixed top-0 left-0 w-full z-50"/>
       </div>
     </Router>
   );

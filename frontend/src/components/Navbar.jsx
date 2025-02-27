@@ -3,15 +3,15 @@ import { FaCheck } from 'react-icons/fa';
 
 const Navbar = () => {
   return (
-    <nav className="bg-gradient-to-r from-blue-600 to-blue-800 p-4 shadow-md w-screen">
+    <nav className="fixed top-0 left-0 w-full bg-gradient-to-r from-blue-600 to-blue-800 p-4 shadow-md z-50">
       <div className="container mx-auto flex justify-between items-center">
-        <Link to="/" className="text-white font-bold text-2xl flex items-center">
+        <Link to="/" className="!text-white font-bold text-2xl flex items-center">
           <FaCheck className="mr-2" />
           BrandChecker
         </Link>
         <div className="space-x-4">
-          <Link to="/" className="text-white hover:text-blue-200">Home</Link>
-          <Link to="/checker" className="bg-white text-blue-700 px-4 py-2 rounded-md hover:bg-blue-100">
+          <Link to="/" className="!text-white px-4 py-2 rounded-md hover:bg-blue-100">Home</Link>
+          <Link to="/checker" className="!text-white px-4 py-2 rounded-md hover:bg-blue-100">
             Check Brand
           </Link>
         </div>

@@ -32,6 +32,13 @@ const CheckerPage = () => {
     setIsLoading(true);
     setError('');
 
+    // Check if at least one field is filled
+    if (!logo && !formData.brandName && !formData.territories && !formData.goodsServices) {
+      setError('Please fill in at least one field or upload a logo.');
+      setIsLoading(false);
+      return;
+    }
+
     const submitData = new FormData();
     submitData.append('logo', logo);
     Object.keys(formData).forEach(key => {
@@ -55,16 +62,22 @@ const CheckerPage = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-12 max-w-4xl">
+    <div className="w-screen min-h-screen px-8 py-12">
       <h1 className="text-3xl font-bold text-center mb-8">Check Your Brand</h1>
       
       {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
-          {error}
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6 flex justify-between items-center">
+          <span>{error}</span>
+          <button
+            onClick={() => setError('')}
+            className="text-red-700 font-bold px-2 cursor-pointer"
+          >
+            ✖
+          </button>
         </div>
       )}
       
-      <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg p-6">
+      <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg p-6 w-full max-w-[500px] min-w-[200px]">
         <div className="mb-6">
           <label className="block text-gray-700 font-bold mb-2" htmlFor="logo">
             Brand Logo
@@ -76,8 +89,7 @@ const CheckerPage = () => {
               accept="image/*"
               onChange={handleLogoChange}
               className="hidden"
-              required
-            />
+              />
             <label 
               htmlFor="logo" 
               className="bg-blue-100 hover:bg-blue-200 text-blue-700 font-semibold py-2 px-4 rounded cursor-pointer"
@@ -107,7 +119,6 @@ const CheckerPage = () => {
             value={formData.brandName}
             onChange={handleInputChange}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            required
           />
         </div>
 
@@ -123,7 +134,6 @@ const CheckerPage = () => {
             onChange={handleInputChange}
             placeholder="e.g. EU, US, China"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            required
           />
         </div>
 
@@ -139,14 +149,13 @@ const CheckerPage = () => {
             rows="4"
             placeholder="Describe the goods and services your brand will provide"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            required
           />
         </div>
 
         <div className="flex items-center justify-center">
           <button
             type="submit"
-            className="bg-blue-100 hover:bg-blue-800 text-blue-700 py-2 px-4"
+            className="bg-blue-100 hover:bg-blue-200 text-blue-700 font-semibold py-2 px-4 rounded"
             disabled={isLoading}
           >
             {isLoading ? 'Processing...' : 'Check Brand Availability'}
