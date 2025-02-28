@@ -58,6 +58,8 @@ const ResultPage = () => {
     }
   };
 
+  console.log(result.logo);
+
   return (
     <div className="container mx-auto px-4 py-12 max-w-4xl">
       <div className="bg-white shadow-lg rounded-lg overflow-hidden">
@@ -66,27 +68,44 @@ const ResultPage = () => {
         </div>
         
         <div className="p-6">
-          <div className="flex flex-col md:flex-row mb-8">
-            <div className="md:w-1/3 mb-4 md:mb-0">
-              <img 
-                src={`http://localhost:8000${result.logo}`} 
-                alt={result.brandName} 
-                className="w-48 h-48 object-contain border border-gray-300 rounded mx-auto"
-              />
-            </div>
-            <div className="md:w-2/3">
-              <h2 className="text-xl font-bold mb-2">{result.brandName}</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-gray-600 font-semibold">Territories:</p>
-                  <p className="mb-2">{result.territories}</p>
-                </div>
-                <div className="md:col-span-2">
-                  <p className="text-gray-600 font-semibold">Goods and Services:</p>
-                  <p className="mb-2">{result.goodsServices}</p>
-                </div>
+          <div className="p-6">
+            {/* Only show this div if result.logo exists */}
+            {result.logo && (
+              <div className="text-xl mb-4">
+                <img 
+                  src={`${result.logo}`} 
+                  alt={result.brandName} 
+                  className="w-48 h-48 object-contain"
+                />
               </div>
-            </div>
+            )}
+
+            {result.brandName && (
+              <div>
+                <p className="text-gray-600 font-semibold">Brand Name:</p>
+                <p className="mb-2">{result.brandName}</p>
+              </div>
+            )}
+
+            {(result.territories || result.goodsServices) && (
+              <div className="space-y-4">
+                {/* Display Territories if they exist */}
+                {result.territories && (
+                  <div>
+                    <p className="text-gray-600 font-semibold">Territories:</p>
+                    <p className="mb-2">{result.territories}</p>
+                  </div>
+                )}
+
+                {/* Display Goods & Services if they exist */}
+                {result.goodsServices && (
+                  <div>
+                    <p className="text-gray-600 font-semibold">Goods and Services:</p>
+                    <p className="mb-2">{result.goodsServices}</p>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
           
           <div className="mb-8">
@@ -129,7 +148,7 @@ const ResultPage = () => {
           <div className="mt-8 text-center">
             <Link
               to="/checker"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg focus:outline-none focus:shadow-outline"
+              className="bg-blue-100 hover:bg-blue-200 text-blue-700 !font-semibold py-2 px-4 rounded"
             >
               Check Another Brand
             </Link>

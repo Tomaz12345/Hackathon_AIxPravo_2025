@@ -1,4 +1,5 @@
 import os
+import logging
 import requests
 from django.conf import settings
 from rest_framework import viewsets, status
@@ -6,6 +7,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from .models import BrandCheck
 from .serializers import BrandCheckSerializer
+from rest_framework.generics import get_object_or_404
 
 # AI utilities
 #import tensorflow as tf
@@ -15,6 +17,9 @@ import openai
 # Set the OpenAI API key
 openai.api_key = settings.OPENAI_API_KEY
 
+# Set up logging
+logger = logging.getLogger(__name__)
+
 class BrandCheckViewSet(viewsets.ModelViewSet):
     queryset = BrandCheck.objects.all()
     serializer_class = BrandCheckSerializer
@@ -22,17 +27,13 @@ class BrandCheckViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
-            # Save the basic data first
+            print("Serializer is valid")
             instance = serializer.save()
-            
-            # Now perform the checks and update the instance
+
+            # Perform the brand check and update the instance
             self.perform_brand_check(instance)
-            
-            # Return the updated instance
-            return Response(
-                self.get_serializer(instance).data,
-                status=status.HTTP_201_CREATED
-            )
+        
+            return Response(self.get_serializer(instance).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def perform_brand_check(self, instance):
@@ -105,9 +106,12 @@ class BrandCheckViewSet(viewsets.ModelViewSet):
             Based on these results, provide a detailed analysis of whether this brand can likely be registered. 
             Include specific recommendations and highlight any potential issues.
             """
+
+            # return arbitrary response for now
+            return '''Based on preliminary analysis, the brand 'Acme' appears to have moderate potential for registration, but further legal consultation is recommended due to some potential similarities found in the EUIPO database.'''
             
             # Call the OpenAI API
-            response = openai.chat.completions.create(
+            '''response = openai.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "You are a trademark registration expert providing detailed analysis."},
@@ -118,7 +122,7 @@ class BrandCheckViewSet(viewsets.ModelViewSet):
             )
             
             # Extract and return the AI feedback
-            return response.choices[0].message.content
+            return response.choices[0].message.content'''
             
         except Exception as e:
             # Fallback response in case of API errors
@@ -138,3 +142,9 @@ class BrandCheckViewSet(viewsets.ModelViewSet):
             return "approved"
         else:
             return "caution"  # Default to caution if unclear
+
+    
+    def retrieve(self, request, pk=None):
+        brand_check = get_object_or_404(BrandCheck, pk=pk)
+        serializer = self.get_serializer(brand_check)
+        return Response(serializer.data)

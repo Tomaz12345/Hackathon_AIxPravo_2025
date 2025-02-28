@@ -10,8 +10,8 @@ const Navbar = () => {
           BrandChecker
         </Link>
         <div className="space-x-4">
-          <Link to="/" className="!text-white px-4 py-2 rounded-md hover:bg-blue-100">Home</Link>
-          <Link to="/checker" className="!text-white px-4 py-2 rounded-md hover:bg-blue-100">
+          <Link to="/" className="!text-white px-4 py-2 rounded-md hover:bg-blue-400">Home</Link>
+          <Link to="/checker" className="!text-white px-4 py-2 rounded-md hover:bg-blue-400">
             Check Brand
           </Link>
         </div>

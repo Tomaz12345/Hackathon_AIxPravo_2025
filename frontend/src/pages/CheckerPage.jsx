@@ -31,31 +31,36 @@ const CheckerPage = () => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
-
+  
     // Check if at least one field is filled
-    if (!logo && !formData.brandName && !formData.territories && !formData.goodsServices) {
-      setError('Please fill in at least one field or upload a logo.');
+    const isFormValid = Object.values(formData).some(value => value.trim() !== '') || logo;
+    if (!isFormValid) {
+      setError('Please provide at least one of the fields (brand name, territories, goods/services, or logo).');
       setIsLoading(false);
       return;
     }
-
+  
     const submitData = new FormData();
-    submitData.append('logo', logo);
+    // Append fields only if they have values
+    if (logo) {
+      submitData.append('logo', logo);
+    }
     Object.keys(formData).forEach(key => {
-      submitData.append(key, formData[key]);
+      if (formData[key].trim() !== '') {
+        submitData.append(key, formData[key]);
+      }
     });
-
+  
     try {
       const response = await axios.post('http://localhost:8000/api/check-brand/', submitData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-
       navigate(`/result/${response.data.id}`);
     } catch (err) {
+      console.error(err.response ? err.response.data : err);  // Log full error response
       setError('There was an error processing your request. Please try again.');
-      console.error(err);
     } finally {
       setIsLoading(false);
     }
@@ -103,7 +108,7 @@ const CheckerPage = () => {
           
           {logoPreview && (
             <div className="mt-4">
-              <img src={logoPreview} alt="Logo preview" className="w-40 h-40 object-contain border border-gray-300 rounded" />
+              <img src={logoPreview} alt="Logo preview" className="w-48 h-48 object-contain" />
             </div>
           )}
         </div>

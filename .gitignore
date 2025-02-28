@@ -23,6 +23,7 @@ db.sqlite3
 *.db
 /local_settings.py
 /staticfiles/
+/backend/media/brand_logos/*
 
 # Vite React
 node_modules/
