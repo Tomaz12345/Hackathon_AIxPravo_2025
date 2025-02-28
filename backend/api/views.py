@@ -53,7 +53,6 @@ class BrandCheckViewSet(viewsets.ModelViewSet):
         # Use LLM to analyze results
         ai_feedback = self.get_ai_feedback(
             instance.brandName,
-            instance.territories,
             instance.goodsServices,
             euipo_result,
             wipo_result,
@@ -85,7 +84,7 @@ class BrandCheckViewSet(viewsets.ModelViewSet):
         # Simulated SIPO database check
         return f"No existing registrations for '{brand_name}' found in the Slovenian Intellectual Property Office database."
     
-    def get_ai_feedback(self, brand_name, territories, goods_services, euipo_result, wipo_result, sipo_result, image_result):
+    def get_ai_feedback(self, brand_name, goods_services, euipo_result, wipo_result, sipo_result, image_result):
         # In a real app, you would call an AI service like OpenAI's API
         # For demonstration purposes, let's simulate an OpenAI call
         
@@ -95,7 +94,6 @@ class BrandCheckViewSet(viewsets.ModelViewSet):
             Analyze the following trademark registration check results:
             
             Brand Name: {brand_name}
-            Territories: {territories}
             Goods and Services: {goods_services}
             
             EUIPO Results: {euipo_result}

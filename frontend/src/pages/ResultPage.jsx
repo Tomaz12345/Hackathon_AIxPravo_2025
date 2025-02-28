@@ -87,23 +87,11 @@ const ResultPage = () => {
               </div>
             )}
 
-            {(result.territories || result.goodsServices) && (
-              <div className="space-y-4">
-                {/* Display Territories if they exist */}
-                {result.territories && (
-                  <div>
-                    <p className="text-gray-600 font-semibold">Territories:</p>
-                    <p className="mb-2">{result.territories}</p>
-                  </div>
-                )}
-
-                {/* Display Goods & Services if they exist */}
-                {result.goodsServices && (
-                  <div>
-                    <p className="text-gray-600 font-semibold">Goods and Services:</p>
-                    <p className="mb-2">{result.goodsServices}</p>
-                  </div>
-                )}
+            {/* Display Goods & Services if they exist */}
+            {result.goodsServices && (
+              <div>
+                <p className="text-gray-600 font-semibold">Goods and Services:</p>
+                <p className="mb-2">{result.goodsServices}</p>
               </div>
             )}
           </div>

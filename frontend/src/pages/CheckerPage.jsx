@@ -6,7 +6,6 @@ const CheckerPage = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     brandName: '',
-    territories: '',
     goodsServices: '',
   });
   const [logo, setLogo] = useState(null);
@@ -35,7 +34,7 @@ const CheckerPage = () => {
     // Check if at least one field is filled
     const isFormValid = Object.values(formData).some(value => value.trim() !== '') || logo;
     if (!isFormValid) {
-      setError('Please provide at least one of the fields (brand name, territories, goods/services, or logo).');
+      setError('Please provide at least one of the fields (brand name, goods/services, or logo).');
       setIsLoading(false);
       return;
     }
@@ -123,21 +122,6 @@ const CheckerPage = () => {
             name="brandName"
             value={formData.brandName}
             onChange={handleInputChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          />
-        </div>
-
-        <div className="mb-6">
-          <label className="block text-gray-700 font-bold mb-2" htmlFor="territories">
-            Territories
-          </label>
-          <input
-            type="text"
-            id="territories"
-            name="territories"
-            value={formData.territories}
-            onChange={handleInputChange}
-            placeholder="e.g. EU, US, China"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
         </div>
