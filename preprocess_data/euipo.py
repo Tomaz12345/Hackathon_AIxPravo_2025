@@ -82,17 +82,21 @@ def search_brand(driver, brand, goods_services):
     num = 0
 
     number_of_results = -1
-    search_info = driver.find_element(By.CSS_SELECTOR, 'div.searchInfo.pull-right').text
+    try:
+        search_info = driver.find_element(By.CSS_SELECTOR, 'div.searchInfo.pull-right').text
 
-    # Use regular expression to extract the first number (the search results count)
-    match = re.search(r'(\d+)', search_info)
+        # Use regular expression to extract the first number (the search results count)
+        match = re.search(r'(\d+)', search_info)
 
-    if match:
-        # Extracted number is in the first group of the match
-        number_of_results = match.group(1)
-        print(number_of_results)
-    else:
-        number_of_results = 1   # Default to 1 if no match is found
+        if match:
+            # Extracted number is in the first group of the match
+            number_of_results = match.group(1)
+            print(number_of_results)
+        else:
+            number_of_results = 1   # Default to 1 if no match is found
+    except Exception as e:
+        number_of_results = 0
+        
 
 
     while True:

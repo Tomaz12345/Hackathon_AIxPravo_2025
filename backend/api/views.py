@@ -26,7 +26,6 @@ class BrandCheckViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
-            print("Serializer is valid")
             instance = serializer.save()
 
             # Perform the brand check and update the instance
@@ -92,8 +91,9 @@ class BrandCheckViewSet(viewsets.ModelViewSet):
 
             # Call the Deepseek API
             response = get_deepseek_response(message)
+            print(f"full get ai feedback response: {response}")
 
-            return response["choices"][0]["message"]["content"][12:]
+            return response["choices"][0]["message"]["content"][:]
             
         except Exception as e:
             # Fallback response in case of API errors
@@ -109,7 +109,7 @@ class BrandCheckViewSet(viewsets.ModelViewSet):
 
             # Call the Deepseek API
             response = get_deepseek_response(message)
-            resp_message = response["choices"][0]["message"]["content"][12:]
+            resp_message = response["choices"][0]["message"]["content"][:]
             print(f"full determine status message: {resp_message}")
 
             return get_message_status(resp_message)

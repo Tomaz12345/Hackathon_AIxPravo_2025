@@ -22,6 +22,28 @@ const parseCSV = (csvText) => {
 
 
 function get_table_result(kind, data) {
+  console.log("data");
+  console.log(data);
+  if (data.length === 0) {
+    var data = {"ID": "", "NIC": "", "brand": "", "owner": ""}; 
+    return (
+      <div className="p-6 max-w-5xl mx-auto text-gray-600">
+        <h3 className="font-bold mb-4 text-gray-800">{kind}</h3>
+        <table className="w-full border-collapse border border-gray-300 shadow-lg rounded-lg">
+          <thead>
+            <tr className="bg-gray-200 text-gray-700">
+              {Object.keys(data).map((key) => (
+                <th key={key} className="border border-gray-300 px-4 py-2 text-left">
+                  {key}
+                </th>
+              ))}
+            </tr>
+          </thead>
+        </table>
+      </div>
+    );
+  }
+
   return (
     <div className="p-6 max-w-5xl mx-auto">
       <h3 className="font-bold mb-4 text-gray-800">{kind}</h3>

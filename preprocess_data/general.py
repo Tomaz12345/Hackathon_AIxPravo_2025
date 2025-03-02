@@ -31,21 +31,24 @@ def setup_driver(headless=True):
 
 if __name__ == "__main__":
     #driver = setup_driver(headless=True)
-    brand = "Nike"
-    goods_services = "construction"
+    brand = "Damalas"
+    goods_services = None
     try:
+        print("Euipo")
         driver = setup_driver(headless=True)
-        #euipo.search_brand(driver, brand, goods_services)
+        euipo.search_brand(driver, brand, goods_services)
         driver.quit()
     except:
         print("Huston, we have a problem, euipo")
     try:
+        print("Sipo")
         driver = setup_driver(headless=True)
         sipo.search_brand(driver, brand, goods_services)
         driver.quit()
     except:
         print("Huston, we have a problem, sipo")
     try:
+        print("Wipo")
         driver = setup_driver(headless=True)
         wipo.search_brand(driver, brand, goods_services)
         driver.quit()
