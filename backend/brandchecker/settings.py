@@ -117,3 +117,4 @@ REST_FRAMEWORK = {
 
 # OpenAI API key
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY', '')
+DEEP_AI_API_KEY = os.getenv("DEEP_AI_API_KEY", '')

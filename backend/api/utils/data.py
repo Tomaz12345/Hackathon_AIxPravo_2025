@@ -4,6 +4,36 @@ import pandas as pd
 from pathlib import Path
 import re
 
+
+def get_specific_data(office: str, brand: str, goods_services: str) -> pd.DataFrame:
+    script_dir = Path(__file__).parent
+    folder = script_dir / "../query_data"
+
+    pattern = r"^{}_".format(office)
+    if brand:
+        pattern += re.escape(brand) + "_"
+    if goods_services:
+        pattern += re.escape(goods_services) + "_"
+    pattern += r"[0-9a-fA-F-]+\.csv$"  # Match the UUID and .txt extension
+
+    regex = re.compile(pattern)
+    files = [file for file in folder.iterdir() if file.is_file()]
+    matching_files = [file for file in files if regex.match(file.name)]
+
+    if not matching_files:
+        raise FileNotFoundError("No matching files found euipo.")
+
+    df = pd.read_csv(folder / matching_files[0], sep=",")
+    df = df[sorted(df.columns)]
+    columns_sorted = sorted(df.columns)
+    columns_sorted.remove("image")
+    df = df[columns_sorted]
+    text = df.to_csv(index=False, lineterminator='\r\n')
+
+    return text
+
+
+
 def combine_files(brand: str | None, goods_services: str | None) -> pd.DataFrame:
     script_dir = Path(__file__).parent
     folder = script_dir / "../query_data"
@@ -31,7 +61,7 @@ def combine_files(brand: str | None, goods_services: str | None) -> pd.DataFrame
     #dfs = []
     text_all = ""
     for i in range(len(matching_files)):
-        df = pd.read_csv(folder /matching_files[i], sep=",")
+        df = pd.read_csv(folder / matching_files[i], sep=",")
         df = df[sorted(df.columns)]
         columns_sorted = sorted(df.columns)
         columns_sorted.remove("image")
@@ -49,8 +79,3 @@ def combine_files(brand: str | None, goods_services: str | None) -> pd.DataFrame
     #print(texts)
     return text_all
 
-
-
-
-if __name__ == "__main__":
-    combine_files("Nike", None)

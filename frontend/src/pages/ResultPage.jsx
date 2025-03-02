@@ -2,6 +2,57 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { FaCheckCircle, FaTimesCircle, FaExclamationTriangle } from 'react-icons/fa';
+// import React from "react";
+import ReactMarkdown from "react-markdown";
+
+
+// Convert CSV to an array of objects
+const parseCSV = (csvText) => {
+  const [headerLine, ...lines] = csvText.trim().split("\n");
+  const headers = headerLine.split(",");
+
+  return lines.map((line) => {
+    const values = line.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/); // Split but keep quoted values intact
+    return headers.reduce((obj, key, index) => {
+      obj[key.trim()] = values[index].replace(/(^"|"$)/g, "").trim(); // Remove surrounding quotes
+      return obj;
+    }, {});
+  });
+};
+
+
+function get_table_result(kind, data) {
+  return (
+    <div className="p-6 max-w-5xl mx-auto">
+      <h3 className="font-bold mb-4 text-gray-800">{kind}</h3>
+      <div className="overflow-x-auto max-h-120 border border-gray-300 rounded-lg shadow-md">
+        <table className="w-full border-collapse border border-gray-300 shadow-lg rounded-lg">
+          <thead>
+            <tr className="bg-gray-200 text-gray-700">
+              {Object.keys(data[0]).map((key) => (
+                <th key={key} className="border border-gray-300 px-4 py-2 text-left">
+                  {key}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((row, rowIndex) => (
+              <tr key={rowIndex} className="hover:bg-gray-100 transition">
+                {Object.values(row).map((value, colIndex) => (
+                  <td key={colIndex} className="border border-gray-300 px-4 py-2">
+                    {value}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
 
 const ResultPage = () => {
   const { id } = useParams();
@@ -58,13 +109,13 @@ const ResultPage = () => {
     }
   };
 
-  console.log(result.logo);
+  // console.log(result);
 
   return (
     <div className="container mx-auto px-4 py-12 max-w-4xl">
       <div className="bg-white shadow-lg rounded-lg overflow-hidden">
         <div className="border-b border-gray-200 bg-gray-50 px-6 py-4">
-          <h1 className="text-2xl font-bold text-gray-800">Brand Check Results</h1>
+          <h1 className="text-xl font-bold text-gray-800">Brand Check Results</h1>
         </div>
         
         <div className="p-6">
@@ -107,31 +158,22 @@ const ResultPage = () => {
                   : 'Your brand has some potential issues to consider.'}
               </h3>
             </div>
-            <div className="bg-gray-50 p-4 rounded border border-gray-200">
-              <p className="text-gray-800 whitespace-pre-line">{result.feedback}</p>
+            <div className="p-6">
+              <ReactMarkdown>{result.feedback}</ReactMarkdown>
             </div>
           </div>
           
-          {/* <div className="border-t border-gray-200 pt-6">
-            <h3 className="text-lg font-bold mb-4">Database Check Results</h3>
+          <div className="border-t border-gray-200 pt-6">
+            <h2 className="text-2xl font-bold mb-4 text-gray-800">Database Check Results</h2>
             
             <div className="space-y-4">
-              <div className="p-4 border border-gray-200 rounded">
-                <h4 className="font-bold">EUIPO (EU Intellectual Property Office)</h4>
-                <p>{result.euipoResults}</p>
-              </div>
+              {get_table_result("EUIPO (EU Intellectual Property Office)", parseCSV(result.euipoResults))}
               
-              <div className="p-4 border border-gray-200 rounded">
-                <h4 className="font-bold">WIPO (World Intellectual Property Organization)</h4>
-                <p>{result.wipoResults}</p>
-              </div>
+              {get_table_result("WIPO (World Intellectual Property Organization)", parseCSV(result.wipoResults))}
               
-              <div className="p-4 border border-gray-200 rounded">
-                <h4 className="font-bold">Slovenian Intellectual Property Office</h4>
-                <p>{result.sipoResults}</p>
-              </div>
+              {get_table_result("SIPO (Slovenian Intellectual Property Office)", parseCSV(result.sipoResults))}
             </div>
-          </div> */}
+          </div>
           
           <div className="mt-8 text-center">
             <Link
