@@ -112,7 +112,7 @@ const ResultPage = () => {
             </div>
           </div>
           
-          <div className="border-t border-gray-200 pt-6">
+          {/* <div className="border-t border-gray-200 pt-6">
             <h3 className="text-lg font-bold mb-4">Database Check Results</h3>
             
             <div className="space-y-4">
@@ -131,7 +131,7 @@ const ResultPage = () => {
                 <p>{result.sipoResults}</p>
               </div>
             </div>
-          </div>
+          </div> */}
           
           <div className="mt-8 text-center">
             <Link

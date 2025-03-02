@@ -35,12 +35,20 @@ if __name__ == "__main__":
     goods_services = "construction"
     try:
         driver = setup_driver(headless=True)
-        euipo.search_brand(driver, brand, goods_services)
+        #euipo.search_brand(driver, brand, goods_services)
+        driver.quit()
     except:
-        print("Huston, we have a problem")
-    driver = setup_driver(headless=True)
-    sipo.search_brand(driver, brand, goods_services)
-    driver = setup_driver(headless=True)
-    wipo.search_brand(driver, brand, goods_services)
-    driver.quit()
+        print("Huston, we have a problem, euipo")
+    try:
+        driver = setup_driver(headless=True)
+        sipo.search_brand(driver, brand, goods_services)
+        driver.quit()
+    except:
+        print("Huston, we have a problem, sipo")
+    try:
+        driver = setup_driver(headless=True)
+        wipo.search_brand(driver, brand, goods_services)
+        driver.quit()
+    except:
+        print("Huston, we have a problem, wipo")
     print("Done")

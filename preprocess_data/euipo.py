@@ -91,12 +91,14 @@ def search_brand(driver, brand, goods_services):
         # Extracted number is in the first group of the match
         number_of_results = match.group(1)
         print(number_of_results)
+    else:
+        number_of_results = 1   # Default to 1 if no match is found
 
 
     while True:
         # Find all the boxes inside the search results
         boxes = driver.find_elements(By.CSS_SELECTOR, ".search-results-boxes .box.light")
-        if (not number_of_results == -1) and (num >= int(number_of_results)):
+        if ((not number_of_results == -1) and (num >= int(number_of_results))) or num % 100 != 0:
             break
 
         for i, box in enumerate(boxes):
