@@ -7,6 +7,10 @@ import requests
 from io import BytesIO
 
 
+# Želeli smo dodati opcijo, da če vneseš željeni logo svoje znamke aplikacija preveri ali ima kakšna znamka registrirana za isto dejavnost preveč podoben logo. 
+# V ta namen smo natrenirali model za klasifikacijo logotov, potem pa smo s pomočjo tega modela izvedli vpetje slik (naših logotov). Podobnost med dvema logotoma 
+# pa je enaka kosinusni podobnosti med dobljenima vektorjema. 
+
 
 with open('logo_classes.json', 'r') as f:
     class_to_idx = json.load(f)
@@ -76,17 +80,18 @@ def compare_logos(input_logo, database_logos):
 
         similarity = calculate_similarity(input_features, db_features)
         
-        # if similarity > 0.6:  # Threshold can be adjusted
+        # if similarity > 0.6: 
         #     results.append({
         #         'logo_id': logo.id,
         #         'name': logo.name,
-        #         'similarity': float(similarity),  # Convert to float for JSON serialization
+        #         'similarity': float(similarity),  
         #         'image_url': logo.image_url
         #     })
     
     return similarity
 
 
+#Ideja je bila, da bi si pri primerjanju logotov pomagali še s tem, da razberemo kaj na katerem piše. 
 import easyocr
 
 def extract_text_dl(image_path):
